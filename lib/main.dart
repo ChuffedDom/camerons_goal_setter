@@ -474,291 +474,296 @@ class _RoasCalculatorState extends State<RoasCalculator> {
     double textWidth = 200.0;
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Return on Ad Spend Calculator",
-            style: Theme.of(context).textTheme.displaySmall,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Return on Ad Spend Calculator",
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 40),
+                      // Average order value row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: textWidth,
+                              child: const Text("Average order value")),
+                          SizedBox(width: 16),
+                          Container(
+                              width: fieldWidth,
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                controller: aovController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    aovValue = double.parse(value);
+                                  });
+                                },
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      // Cost of goods row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: textWidth,
+                              child: const Text("Cost of goods")),
+                          SizedBox(width: 16),
+                          Container(
+                              width: fieldWidth,
+                              child: TextField(
+                                controller: costOfGoodsController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    cogValue = double.parse(value);
+                                    calcTotalCost();
+                                  });
+                                },
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      // Payment processing row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: textWidth,
+                              child: const Text("Payment Processing Fees")),
+                          SizedBox(width: 16),
+                          Container(
+                              width: fieldWidth,
+                              child: TextField(
+                                controller: processingFeesController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    processValue = double.parse(value);
+                                    calcTotalCost();
+                                  });
+                                },
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      // Shipping cost row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: textWidth,
+                              child: const Text("Shipping costs")),
+                          SizedBox(width: 16),
+                          Container(
+                              width: fieldWidth,
+                              child: TextField(
+                                controller: shippingController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    shippingValue = double.parse(value);
+                                    calcTotalCost();
+                                  });
+                                },
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      // fulfilment cost per unit row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: textWidth,
+                              child: const Text("Fulfilment cost per unit")),
+                          SizedBox(width: 16),
+                          Container(
+                              width: fieldWidth,
+                              child: TextField(
+                                controller: fulfilmentController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    fulfilValue = double.parse(value);
+                                    calcTotalCost();
+                                  });
+                                },
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      // Discount $ off row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: textWidth,
+                              child: const Text("Discount \$ off")),
+                          SizedBox(width: 16),
+                          Container(
+                              width: fieldWidth,
+                              child: TextField(
+                                controller: discountDollarController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    discountDollarValue = double.parse(value);
+                                    calcTotalCost();
+                                  });
+                                },
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      // Discount % off row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: textWidth,
+                              child: const Text("Discount % off")),
+                          SizedBox(width: 16),
+                          Container(
+                              width: fieldWidth,
+                              child: TextField(
+                                controller: discountPercentageController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    discountPercentageValue =
+                                        double.parse(value);
+                                    calcTotalCost();
+                                  });
+                                },
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      // Included free gift cost row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: textWidth,
+                              child: const Text("Included free gift cost")),
+                          SizedBox(width: 16),
+                          Container(
+                              width: fieldWidth,
+                              child: TextField(
+                                controller: freeGiftController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    freeGiftValue = double.parse(value);
+                                    calcTotalCost();
+                                  });
+                                },
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                    ]),
+                SizedBox(width: 40),
+                Column(
                   children: [
-                    const SizedBox(height: 40),
-                    // Average order value row
+                    // Total cost of product to fulfill row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                             width: textWidth,
-                            child: const Text("Average order value")),
+                            child: const Text(
+                                "Total cost of Product and fulfilment")),
                         SizedBox(width: 16),
                         Container(
-                            width: fieldWidth,
-                            child: TextField(
-                              keyboardType: TextInputType.number,
-                              controller: aovController,
-                              decoration:
-                                  InputDecoration(border: OutlineInputBorder()),
-                              onChanged: (value) {
-                                setState(() {
-                                  aovValue = double.parse(value);
-                                });
-                              },
-                            )),
+                            width: fieldWidth, child: Text("\$$totalCost")),
                       ],
                     ),
                     SizedBox(height: 16),
-                    // Cost of goods row
+                    // Net Profit row
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: textWidth, child: const Text("Net Profit")),
+                        SizedBox(width: 16),
+                        Container(
+                            width: fieldWidth, child: Text("\$$netProfit")),
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    // Profit Percentage row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                             width: textWidth,
-                            child: const Text("Cost of goods")),
+                            child: const Text("Profit Percentage")),
                         SizedBox(width: 16),
                         Container(
-                            width: fieldWidth,
-                            child: TextField(
-                              controller: costOfGoodsController,
-                              decoration:
-                                  InputDecoration(border: OutlineInputBorder()),
-                              onChanged: (value) {
-                                setState(() {
-                                  cogValue = double.parse(value);
-                                  calcTotalCost();
-                                });
-                              },
-                            )),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    // Payment processing row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            width: textWidth,
-                            child: const Text("Payment Processing Fees")),
-                        SizedBox(width: 16),
-                        Container(
-                            width: fieldWidth,
-                            child: TextField(
-                              controller: processingFeesController,
-                              decoration:
-                                  InputDecoration(border: OutlineInputBorder()),
-                              onChanged: (value) {
-                                setState(() {
-                                  processValue = double.parse(value);
-                                  calcTotalCost();
-                                });
-                              },
-                            )),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    // Shipping cost row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            width: textWidth,
-                            child: const Text("Shipping costs")),
-                        SizedBox(width: 16),
-                        Container(
-                            width: fieldWidth,
-                            child: TextField(
-                              controller: shippingController,
-                              decoration:
-                                  InputDecoration(border: OutlineInputBorder()),
-                              onChanged: (value) {
-                                setState(() {
-                                  shippingValue = double.parse(value);
-                                  calcTotalCost();
-                                });
-                              },
-                            )),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    // fulfilment cost per unit row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            width: textWidth,
-                            child: const Text("Fulfilment cost per unit")),
-                        SizedBox(width: 16),
-                        Container(
-                            width: fieldWidth,
-                            child: TextField(
-                              controller: fulfilmentController,
-                              decoration:
-                                  InputDecoration(border: OutlineInputBorder()),
-                              onChanged: (value) {
-                                setState(() {
-                                  fulfilValue = double.parse(value);
-                                  calcTotalCost();
-                                });
-                              },
-                            )),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    // Discount $ off row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            width: textWidth,
-                            child: const Text("Discount \$ off")),
-                        SizedBox(width: 16),
-                        Container(
-                            width: fieldWidth,
-                            child: TextField(
-                              controller: discountDollarController,
-                              decoration:
-                                  InputDecoration(border: OutlineInputBorder()),
-                              onChanged: (value) {
-                                setState(() {
-                                  discountDollarValue = double.parse(value);
-                                  calcTotalCost();
-                                });
-                              },
-                            )),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    // Discount % off row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            width: textWidth,
-                            child: const Text("Discount % off")),
-                        SizedBox(width: 16),
-                        Container(
-                            width: fieldWidth,
-                            child: TextField(
-                              controller: discountPercentageController,
-                              decoration:
-                                  InputDecoration(border: OutlineInputBorder()),
-                              onChanged: (value) {
-                                setState(() {
-                                  discountPercentageValue = double.parse(value);
-                                  calcTotalCost();
-                                });
-                              },
-                            )),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    // Included free gift cost row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            width: textWidth,
-                            child: const Text("Included free gift cost")),
-                        SizedBox(width: 16),
-                        Container(
-                            width: fieldWidth,
-                            child: TextField(
-                              controller: freeGiftController,
-                              decoration:
-                                  InputDecoration(border: OutlineInputBorder()),
-                              onChanged: (value) {
-                                setState(() {
-                                  freeGiftValue = double.parse(value);
-                                  calcTotalCost();
-                                });
-                              },
-                            )),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                  ]),
-              SizedBox(width: 40),
-              Column(
-                children: [
-                  // Total cost of product to fulfill row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: textWidth,
-                          child: const Text(
-                              "Total cost of Product and fulfilment")),
-                      SizedBox(width: 16),
-                      Container(width: fieldWidth, child: Text("\$$totalCost")),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  // Net Profit row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: textWidth, child: const Text("Net Profit")),
-                      SizedBox(width: 16),
-                      Container(width: fieldWidth, child: Text("\$$netProfit")),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  // Profit Percentage row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: textWidth,
-                          child: const Text("Profit Percentage")),
-                      SizedBox(width: 16),
-                      Container(
-                        width: fieldWidth,
-                        child: Text("${f.format(netProfitPercentage)}%"),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  // Break even Return on Ad spend row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: textWidth,
-                          child: const Text("Break even Return on Ad spend")),
-                      SizedBox(width: 16),
-                      Container(
-                        width: fieldWidth,
-                        child: Text(
-                          f.format(breakEvenRoas),
+                          width: fieldWidth,
+                          child: Text("${f.format(netProfitPercentage)}%"),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    // Break even Return on Ad spend row
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: textWidth,
+                            child: const Text("Break even Return on Ad spend")),
+                        SizedBox(width: 16),
+                        Container(
+                          width: fieldWidth,
+                          child: Text(
+                            f.format(breakEvenRoas),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
